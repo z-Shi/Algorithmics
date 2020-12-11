@@ -66,7 +66,10 @@ public class RadixSort {
     public List<Integer> sortDecimal(List<Integer> sequence) {
         System.out.println("Radix Sort - Decimal Method");
 
-        int maximumValue = getMaximumValue(sequence);
+        List<Integer> workingSequence = new ArrayList<>();
+        workingSequence.addAll(sequence);
+
+        int maximumValue = getMaximumValue(workingSequence);
         int noOfDigits = String.valueOf(maximumValue).length();
 
         List<List<Integer>> buckets = new ArrayList<>(10);
@@ -78,7 +81,7 @@ public class RadixSort {
         for (int position = 1; position <= noOfDigits; position++) {
             buckets.forEach(List::clear);
 
-            for (Integer value : sequence) {
+            for (Integer value : workingSequence) {
                 String currentValue = String.valueOf(value);
                 int k = 0;
 
@@ -89,14 +92,14 @@ public class RadixSort {
                 buckets.get(k).add(value);
             }
 
-            sequence.clear();
+            workingSequence.clear();
 
-            buckets.forEach(sequence::addAll);
+            buckets.forEach(workingSequence::addAll);
 
-            System.out.println("Iteration: " + position + " | Sequence: " + sequence.toString());
+            System.out.println("Iteration: " + position + " | Sequence: " + workingSequence.toString());
         }
 
-        return sequence;
+        return workingSequence;
     }
 
     /**
