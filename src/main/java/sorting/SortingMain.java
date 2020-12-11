@@ -6,14 +6,18 @@ import java.util.List;
 public class SortingMain {
 
     public static void main(String[] args) {
-        List<String> values = new ArrayList<>();
-        values.add("10000100"); // 132
-        values.add("10010001"); // 145
-        values.add("00011101"); // 29
-        values.add("00000111"); // 7
+        List<Integer> values = new ArrayList<>();
+
+        values.add(132);
+        values.add(145);
+        values.add(29);
+        values.add(7);
+
         RadixSort radixSort = new RadixSort();
-        List<String> sorted = radixSort.sort(values, 8);
-        System.out.println(sorted.toString());
+        List<Integer> sorted = radixSort.sort(values, 8, 2);
+
+        System.out.println("Unsorted List: " + values.toString());
+        System.out.println("Sorted List: " + sorted.toString());
     }
 
 }
