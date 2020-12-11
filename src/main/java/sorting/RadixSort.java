@@ -24,7 +24,9 @@ public class RadixSort {
      * @param lengthOfSubseq this is the length of the subsequence used for sorting
      * @return list<int> this is the sorted list of integers
      */
-    public List<Integer> sort(List<Integer> rawSequence, int itemLength, int lengthOfSubseq) {
+    public List<Integer> sortBinary(List<Integer> rawSequence, int itemLength, int lengthOfSubseq) {
+        System.out.println("Radix Sort - Binary Method");
+
         List<String> workingSequence = getBinaryVersion(rawSequence, itemLength);
 
         int numIterations = itemLength / lengthOfSubseq;
@@ -52,6 +54,49 @@ public class RadixSort {
         }
 
         return getDecimalVersion(workingSequence);
+    }
+
+    /**
+     * This method allows a list of integers to be sorted, using the radix sort.
+     * This specific implementation takes the value of each integer, starting from the rightmost position
+     * and places it into the appropriate bucket (from 0-9).
+     * @param sequence this is the input, an unsorted sequence of integers
+     * @return list<int> this is the sorted sequence of integers
+     */
+    public List<Integer> sortDecimal(List<Integer> sequence) {
+        System.out.println("Radix Sort - Decimal Method");
+
+        int maximumValue = getMaximumValue(sequence);
+        int noOfDigits = String.valueOf(maximumValue).length();
+
+        List<List<Integer>> buckets = new ArrayList<>(10);
+
+        for (int i = 0; i < 10; i++) {
+            buckets.add(new ArrayList<>());
+        }
+
+        for (int position = 1; position <= noOfDigits; position++) {
+            buckets.forEach(List::clear);
+
+            for (Integer value : sequence) {
+                String currentValue = String.valueOf(value);
+                int k = 0;
+
+                if (position <= currentValue.length()) {
+                    k = Character.getNumericValue(currentValue.charAt(currentValue.length() - position));
+                }
+
+                buckets.get(k).add(value);
+            }
+
+            sequence.clear();
+
+            buckets.forEach(sequence::addAll);
+
+            System.out.println("Iteration: " + position + " | Sequence: " + sequence.toString());
+        }
+
+        return sequence;
     }
 
     /**
@@ -87,6 +132,18 @@ public class RadixSort {
         List<Integer> output = new ArrayList<>();
         input.forEach(word -> output.add(binaryToDecimal(word)));
         return output;
+    }
+
+    private int getMaximumValue(List<Integer> sequence) {
+        int maximum = sequence.get(0);
+
+        for (int i = 1; i < sequence.size(); i++) {
+            if (sequence.get(i) > maximum) {
+                maximum = sequence.get(i);
+            }
+        }
+
+        return maximum;
     }
 
 }

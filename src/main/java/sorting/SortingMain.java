@@ -14,10 +14,12 @@ public class SortingMain {
         values.add(7);
 
         RadixSort radixSort = new RadixSort();
-        List<Integer> sorted = radixSort.sort(values, 8, 2);
+        List<Integer> binarySorted = radixSort.sortBinary(values, 8, 2);
+        List<Integer> decimalSorted = radixSort.sortDecimal(values);
 
         System.out.println("Unsorted List: " + values.toString());
-        System.out.println("Sorted List: " + sorted.toString());
+        System.out.println("Sorted List (Binary): " + binarySorted.toString());
+        System.out.println("Sorted List (Decimal): " + decimalSorted.toString());
     }
 
 }
