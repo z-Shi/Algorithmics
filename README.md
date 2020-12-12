@@ -9,3 +9,7 @@ The following is a running checklist of what I have implemented:
   - [x] Search
   - [x] Delete
   - [x] Extract Words
+- [x] Huffman Tree
+  - [x] Build Huffman Tree
+  - [x] Encode Text
+  - [x] Decode Text
