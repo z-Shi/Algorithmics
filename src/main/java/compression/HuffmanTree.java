@@ -57,11 +57,11 @@ public class HuffmanTree {
         }
 
         root = priorityQueue.peek();
+
+        prepareHuffmanCode(root, "");
     }
 
     public String encode(String text) {
-        encode(root, "");
-
         StringBuilder encodedText = new StringBuilder();
 
         for (char letter : text.toCharArray()) {
@@ -88,7 +88,7 @@ public class HuffmanTree {
         return decryptedText.toString();
     }
 
-    private void encode(HuffmanTreeNode root, String path) {
+    private void prepareHuffmanCode(HuffmanTreeNode root, String path) {
         if (root == null) {
             return;
         }
@@ -97,8 +97,8 @@ public class HuffmanTree {
             huffmanCode.put(root.getLetter(), path.length() > 0 ? path : "1");
         }
 
-        encode(root.getLeft(), path + '0');
-        encode(root.getRight(), path + '1');
+        prepareHuffmanCode(root.getLeft(), path + '0');
+        prepareHuffmanCode(root.getRight(), path + '1');
     }
 
     public int decode(HuffmanTreeNode root, int index, String path, StringBuilder decryptedText) {
