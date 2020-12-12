@@ -13,3 +13,4 @@ The following is a running checklist of what I have implemented:
   - [x] Build Huffman Tree
   - [x] Encode Text
   - [x] Decode Text
+  - [x] Calculate Weighted Path Length
