@@ -10,26 +10,20 @@ public class HuffmanTree {
 
     private Map<Character, String> huffmanCode;
     private HuffmanTreeNode root;
+    private int weightedPathLength;
 
     public HuffmanTree() {
         this.huffmanCode = new HashMap<>();
         this.root = null;
+        this.weightedPathLength = 0;
     }
 
     public Map<Character, String> getHuffmanCode() {
         return huffmanCode;
     }
 
-    public void setHuffmanCode(Map<Character, String> huffmanCode) {
-        this.huffmanCode = huffmanCode;
-    }
-
-    public HuffmanTreeNode getRoot() {
-        return root;
-    }
-
-    public void setRoot(HuffmanTreeNode root) {
-        this.root = root;
+    public int getWeightedPathLength() {
+        return weightedPathLength;
     }
 
     public void buildHuffmanTree(String text) {
@@ -59,6 +53,11 @@ public class HuffmanTree {
         root = priorityQueue.peek();
 
         prepareHuffmanCode(root, "");
+
+        for(Map.Entry<Character, String> entry : huffmanCode.entrySet()) {
+            int valueToAdd = frequencies.get(entry.getKey()) * entry.getValue().length();
+            weightedPathLength += valueToAdd;
+        }
     }
 
     public String encode(String text) {
