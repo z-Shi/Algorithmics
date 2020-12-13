@@ -17,3 +17,5 @@ The following is a running checklist of what I have implemented:
 - [x] LZW
   - [x] Encode Text
   - [x] Decode Text
+- [x] String Distance
+  - [x] Method to Calculate Distance between 2 Words
