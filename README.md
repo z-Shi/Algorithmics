@@ -14,3 +14,5 @@ The following is a running checklist of what I have implemented:
   - [x] Encode Text
   - [x] Decode Text
   - [x] Calculate Weighted Path Length
+- [x] LZW
+  - [x] Encode Text
