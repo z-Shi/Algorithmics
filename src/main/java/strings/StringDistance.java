@@ -43,6 +43,20 @@ public class StringDistance {
             }
         }
 
+//        // Output Table
+//        System.out.print("|   |");
+//        for (char chara : second.toCharArray()) {
+//            System.out.print("| " + chara + " |");
+//        }
+//        System.out.println();
+//        for (int i = 0; i < lenFirst; i++) {
+//            System.out.print("| " + first.charAt(i) + " |");
+//            for (int j = 0; j < lenSecond; j++) {
+//                System.out.print("| " + table[i][j] + " |");
+//            }
+//            System.out.println();
+//        }
+
         return table[lenFirst][lenSecond];
     }
 
