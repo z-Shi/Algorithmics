@@ -36,11 +36,17 @@ public class Utility {
             binaryVal.insert(0, remainder);
         }
 
-        while (binaryVal.length() < paddedLength) {
-            binaryVal.insert(0, 0);
-        }
+        padToSize(binaryVal, paddedLength);
 
         return binaryVal.toString();
+    }
+
+    public static String padToSize(StringBuilder binary, int paddedLength) {
+        while (binary.length() < paddedLength) {
+            binary.insert(0, 0);
+        }
+
+        return binary.toString();
     }
 
 }
