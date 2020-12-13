@@ -14,6 +14,13 @@ public class CompressionMain {
         System.out.println("Encoded Text: " + encodedText);
         System.out.println("Decoded Text: " + text);
         System.out.println("Weighted Path Length: " + weightedPathLength);
+
+        LZW lzw = new LZW();
+
+        encodedText = lzw.encode("GACGATACGATACG");
+        System.out.println("Dictionary: " + lzw.getDictionary().toString());
+        System.out.println("Encoded Text: " + encodedText);
+        System.out.println("Compressed Size: " + encodedText.length());
     }
 
 }
