@@ -70,21 +70,21 @@ public class HuffmanTree {
         return encodedText.toString();
     }
 
-    public String decode(String encryptedText) {
-        StringBuilder decryptedText = new StringBuilder();
+    public String decode(String encodedText) {
+        StringBuilder decodedText = new StringBuilder();
 
         if (isLeaf(root)) {
             while (root.getFrequency() == 0) {
-                decryptedText.append(root.getLetter());
+                decodedText.append(root.getLetter());
             }
         } else {
             int index = -1;
-            while (index < encryptedText.length() - 1) {
-                index = decode(root, index, encryptedText, decryptedText);
+            while (index < encodedText.length() - 1) {
+                index = decode(root, index, encodedText, decodedText);
             }
         }
 
-        return decryptedText.toString();
+        return decodedText.toString();
     }
 
     private void prepareHuffmanCode(HuffmanTreeNode root, String path) {
@@ -100,7 +100,7 @@ public class HuffmanTree {
         prepareHuffmanCode(root.getRight(), path + '1');
     }
 
-    public int decode(HuffmanTreeNode root, int index, String path, StringBuilder decryptedText) {
+    private int decode(HuffmanTreeNode root, int index, String path, StringBuilder decryptedText) {
         if (root == null) {
             return index;
         }
