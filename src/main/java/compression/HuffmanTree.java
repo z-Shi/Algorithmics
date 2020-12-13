@@ -26,6 +26,10 @@ public class HuffmanTree {
         return weightedPathLength;
     }
 
+    /**
+     * This method is used to build the huffman tree, given a text
+     * @param text this is the input text
+     */
     public void buildHuffmanTree(String text) {
         if ((text == null) || (text.length() == 0)) {
             return;
@@ -60,6 +64,11 @@ public class HuffmanTree {
         }
     }
 
+    /**
+     * This method is used to encode the text, using the huffman tree
+     * @param text this is the text to be encoded
+     * @return string this is the encoded text
+     */
     public String encode(String text) {
         StringBuilder encodedText = new StringBuilder();
 
@@ -70,6 +79,11 @@ public class HuffmanTree {
         return encodedText.toString();
     }
 
+    /**
+     * This method is used to decode the text, using the huffman tree
+     * @param encodedText this is the encoded text
+     * @return string this is the decoded text
+     */
     public String decode(String encodedText) {
         StringBuilder decodedText = new StringBuilder();
 
@@ -87,6 +101,11 @@ public class HuffmanTree {
         return decodedText.toString();
     }
 
+    /**
+     * This is a method used to generate the huffman code.
+     * @param root this is the current root node
+     * @param path this is the path to it
+     */
     private void prepareHuffmanCode(HuffmanTreeNode root, String path) {
         if (root == null) {
             return;
@@ -100,23 +119,36 @@ public class HuffmanTree {
         prepareHuffmanCode(root.getRight(), path + '1');
     }
 
-    private int decode(HuffmanTreeNode root, int index, String path, StringBuilder decryptedText) {
+    /**
+     * This is a method used to decode encoded text
+     * @param root this is the root node
+     * @param index this is the index
+     * @param path this is the path to a node
+     * @param decodedText this is the decoded text, so far
+     * @return int this is the index returned
+     */
+    private int decode(HuffmanTreeNode root, int index, String path, StringBuilder decodedText) {
         if (root == null) {
             return index;
         }
 
         if (isLeaf(root)) {
-            decryptedText.append(root.getLetter());
+            decodedText.append(root.getLetter());
             return index;
         }
 
         index++;
 
         root = (path.charAt(index) == '0') ? root.getLeft() : root.getRight();
-        index = decode(root, index, path, decryptedText);
+        index = decode(root, index, path, decodedText);
         return index;
     }
 
+    /**
+     * This is a method used to check whether a node is a leaf
+     * @param root this is the given node
+     * @return boolean this says whether the node is a leaf
+     */
     private boolean isLeaf(HuffmanTreeNode root) {
         return (root.getLeft() == null) && (root.getRight() == null);
     }

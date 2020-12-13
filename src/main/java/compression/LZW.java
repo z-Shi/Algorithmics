@@ -27,6 +27,15 @@ public class LZW {
         return baseDictionary;
     }
 
+    public void setupBaseDictionary(String text) {
+        setupBaseDict(text);
+    }
+
+    /**
+     * This method is used to encode text, using the base dictionary setup upon class creation.
+     * @param text this is the raw text
+     * @return string this is the encoded text
+     */
     public String encode(String text) {
         Map<String, Integer> dict = new HashMap<>(baseDictionary);
         int codeword = baseCodeword;
@@ -76,6 +85,11 @@ public class LZW {
         return encodedText.toString();
     }
 
+    /**
+     * This method is used to decode text, using the base dictionary setup upon class creation.
+     * @param encodedText this is the encoded text
+     * @return string this is the decoded text
+     */
     public String decode(String encodedText) {
         Map<Integer, String> dict = flip(baseDictionary);
 
@@ -113,7 +127,7 @@ public class LZW {
                 currentString = dict.get(code);
                 decodedText.append(currentString);
             } else {
-                currentString = oldString + oldString.charAt(0); // if lookup fails
+                currentString = oldString + oldString.charAt(0);
             }
 
             String newString = oldString + currentString.charAt(0);
@@ -128,6 +142,10 @@ public class LZW {
         return decodedText.toString();
     }
 
+    /**
+     * This method is used to setup the base dictionary from unique characters.
+     * @param text this is the raw text used to get the base dictionary
+     */
     private void setupBaseDict(String text) {
         List<Character> uniqueCharacters = getUniqueCharacters(text);
         baseCodewordLength = getCodewordLength(uniqueCharacters);
@@ -139,6 +157,11 @@ public class LZW {
         }
     }
 
+    /**
+     * This method is used to get the codeword length, given a list of unique characters.
+     * @param characters this is the list of unique characters
+     * @return int this is the codeword length
+     */
     private int getCodewordLength(List<Character> characters) {
         int codewordLength = 1;
         int noOfCodewords = (int) Math.pow(2, codewordLength);
@@ -151,6 +174,11 @@ public class LZW {
         return codewordLength;
     }
 
+    /**
+     * This method is used to get a list of unique characters.
+     * @param text this is the raw text
+     * @return list this is the list of unique characters
+     */
     private List<Character> getUniqueCharacters(String text) {
         List<Character> uniqueCharacters = new ArrayList<>();
 

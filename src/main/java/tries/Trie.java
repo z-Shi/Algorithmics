@@ -11,6 +11,10 @@ public class Trie {
         this.root = new TrieNode(Character.MIN_VALUE);
     }
 
+    /**
+     * This is a method used to insert a word into a trie
+     * @param word this is a word to be inserted
+     */
     public void insert(String word) {
         int position = 0;
         TrieNode current = root;
@@ -61,6 +65,11 @@ public class Trie {
         }
     }
 
+    /**
+     * This is a method used to check whether a word is in the trie
+     * @param word this is the word to search for
+     * @return boolean this is the result, whether the word is in the trie
+     */
     public boolean search(String word) {
         int position = 0;
         TrieNode current = root.getChild();
@@ -86,6 +95,11 @@ public class Trie {
         return found;
     }
 
+    /**
+     * This is a method used to delete a word from the trie
+     * @param word this is the word to delete
+     * @return boolean this is whether the word has been deleted from the trie
+     */
     public boolean delete(String word) {
         int position = 0;
         TrieNode current = root.getChild();
@@ -140,12 +154,23 @@ public class Trie {
         return true;
     }
 
+    /**
+     * This is a method used to get all of the words found in the trie
+     * @return list this is the list of words in the trie
+     */
     public List<String> extract() {
         List<String> words = new ArrayList<>();
         words = getWords(root,"", words);
         return words;
     }
 
+    /**
+     * This is a method used to get the words from the tree, it is a recursive method
+     * @param node this is the node we get words from
+     * @param word this is the word we are finding
+     * @param words this is the list of words found so far
+     * @return list this is the list of words from the trie
+     */
     private List<String> getWords(TrieNode node, String word, List<String> words) {
         word += node.getLetter();
 
@@ -160,6 +185,11 @@ public class Trie {
         return words;
     }
 
+    /**
+     * This is a method used to get the children, given a node, by following along the siblings
+     * @param node this is the node we are to get children from
+     * @return list this is the list of children
+     */
     private List<TrieNode> getChildren(TrieNode node) {
         List<TrieNode> children = new ArrayList<>();
         TrieNode child = node.getChild();
