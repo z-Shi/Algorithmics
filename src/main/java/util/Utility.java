@@ -74,10 +74,10 @@ public class Utility {
      * @param original this is the original map
      * @return map this is the flipped map
      */
-    public static Map<String, String> flip(Map<String, String> original) {
-        Map<String, String> flipped = new HashMap<>();
+    public static Map<Integer, String> flip(Map<String, Integer> original) {
+        Map<Integer, String> flipped = new HashMap<>();
 
-        for (Map.Entry<String, String> entry : original.entrySet()) {
+        for (Map.Entry<String, Integer> entry : original.entrySet()) {
             flipped.put(entry.getValue(), entry.getKey());
         }
 

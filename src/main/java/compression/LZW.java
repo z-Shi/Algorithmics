@@ -2,7 +2,10 @@ package compression;
 
 import static java.lang.String.valueOf;
 import static java.util.Collections.sort;
-import static util.Utility.*;
+import static util.Utility.binaryToDecimal;
+import static util.Utility.decimalToBinary;
+import static util.Utility.flip;
+import static util.Utility.padToSize;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,21 +14,21 @@ import java.util.Map;
 
 public class LZW {
 
-    private Map<String, String> baseDictionary;
+    private Map<String, Integer> baseDictionary;
     private int baseCodeword;
     private int baseCodewordLength;
 
     public LZW(String text) {
         this.baseDictionary = new HashMap<>();
-        setupBaseDictionary(text);
+        setupBaseDict(text);
     }
 
-    public Map<String, String> getBaseDictionary() {
+    public Map<String, Integer> getBaseDictionary() {
         return baseDictionary;
     }
 
     public String encode(String text) {
-        Map<String, String> dictionary = new HashMap<>(baseDictionary);
+        Map<String, Integer> dict = new HashMap<>(baseDictionary);
         int codeword = baseCodeword;
         int codewordLength = baseCodewordLength;
 
@@ -40,7 +43,7 @@ public class LZW {
             String longestWordInDictionary = word;
             int length = 0;
 
-            while (dictionary.containsKey(word)) {
+            while (dict.containsKey(word)) {
                 longestWordInDictionary = word;
                 length++;
                 if (position + length < text.length() + 1) {
@@ -50,7 +53,8 @@ public class LZW {
                 }
             }
 
-            StringBuilder code = new StringBuilder(dictionary.get(longestWordInDictionary));
+            String longestWordCode = decimalToBinary(dict.get(longestWordInDictionary), codewordLength);
+            StringBuilder code = new StringBuilder(longestWordCode);
             encodedText.append(padToSize(code, codewordLength));
 
             if (codeword >= Math.pow(2, codewordLength)) {
@@ -58,8 +62,8 @@ public class LZW {
             }
 
             if (!word.equals("----")) {
-                dictionary.put(word, decimalToBinary(codeword, codewordLength));
-                System.out.println((step + 1) + "\t" + (position + 1) + "\t" + longestWordInDictionary + "    \t" + code + "      \t" + word + "          \t" + dictionary.get(word));
+                dict.put(word, codeword);
+                System.out.println((step + 1) + "\t" + (position + 1) + "\t" + longestWordInDictionary + "    \t" + code + "      \t" + word + "          \t" + dict.get(word));
             } else {
                 System.out.println((step + 1) + "\t" + (position + 1) + "\t" + longestWordInDictionary + "    \t" + code + "      \t" + word + "          \t" + "----");
             }
@@ -73,7 +77,7 @@ public class LZW {
     }
 
     public String decode(String encodedText) {
-        Map<Integer, String> dictionary = exchangeBinaryForDecimalCodes(flip(baseDictionary));
+        Map<Integer, String> dict = flip(baseDictionary);
 
         int codeword = baseCodeword;
         int codewordLength = baseCodewordLength;
@@ -86,14 +90,14 @@ public class LZW {
 
         String word = encodedText.substring(position, position + codewordLength);
         int code = binaryToDecimal(word);
-        decodedText.append(dictionary.get(code));
+        decodedText.append(dict.get(code));
         position += codewordLength;
 
-        System.out.println(step + "\t" + position + "    \t" + "----" + "          \t" + word + "          \t" + dictionary.get(code) + "        \t" + "----" + "      \t" + "----");
+        System.out.println(step + "\t" + position + "    \t" + "----" + "          \t" + word + "          \t" + dict.get(code) + "        \t" + "----" + "      \t" + "----");
 
         while (position < encodedText.length()) {
             step++;
-            String oldString = dictionary.get(code);
+            String oldString = dict.get(code);
 
             if (codeword >= Math.pow(2, codewordLength)) {
                 codewordLength++;
@@ -104,14 +108,18 @@ public class LZW {
                 code = binaryToDecimal(word);
             }
 
-            String currentString = dictionary.get(code);
-            decodedText.append(currentString);
+            String currentString;
+            if (dict.containsKey(code)) {
+                currentString = dict.get(code);
+                decodedText.append(currentString);
+            } else {
+                currentString = oldString + oldString.charAt(0); // if lookup fails
+            }
 
             String newString = oldString + currentString.charAt(0);
-            String newCode = decimalToBinary(codeword, codewordLength);
-            dictionary.put(binaryToDecimal(newCode), newString);
+            dict.put(codeword, newString);
 
-            System.out.println(step + "\t" + position + "    \t" + oldString + "           \t" + word + "          \t" + currentString + "        \t" + newString + "      \t" + newCode);
+            System.out.println(step + "\t" + position + "    \t" + oldString + "           \t" + word + "          \t" + currentString + "        \t" + newString + "      \t" + codeword);
 
             codeword++;
             position += codewordLength;
@@ -120,13 +128,13 @@ public class LZW {
         return decodedText.toString();
     }
 
-    private void setupBaseDictionary(String text) {
+    private void setupBaseDict(String text) {
         List<Character> uniqueCharacters = getUniqueCharacters(text);
         baseCodewordLength = getCodewordLength(uniqueCharacters);
         baseCodeword = 0;
 
         for (char letter : uniqueCharacters) {
-            baseDictionary.put(valueOf(letter), decimalToBinary(baseCodeword, baseCodewordLength));
+            baseDictionary.put(valueOf(letter), baseCodeword);
             baseCodeword++;
         }
     }
@@ -155,17 +163,6 @@ public class LZW {
         sort(uniqueCharacters);
 
         return uniqueCharacters;
-    }
-
-    private Map<Integer, String> exchangeBinaryForDecimalCodes(Map<String, String> binaryKeys) {
-        Map<Integer, String> decimalKeys = new HashMap<>();
-
-        for (Map.Entry<String, String> entry : binaryKeys.entrySet()) {
-            int code = binaryToDecimal(entry.getKey());
-            decimalKeys.put(code, entry.getValue());
-        }
-
-        return decimalKeys;
     }
 
 }
