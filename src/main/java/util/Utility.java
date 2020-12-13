@@ -1,5 +1,8 @@
 package util;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Utility {
 
     /**
@@ -41,12 +44,44 @@ public class Utility {
         return binaryVal.toString();
     }
 
+    /**
+     * This method is used to pad a binary string to a given length
+     * @param binary this is the binary value
+     * @param paddedLength this is the given length
+     * @return string this is the padded binary value
+     */
     public static String padToSize(StringBuilder binary, int paddedLength) {
         while (binary.length() < paddedLength) {
             binary.insert(0, 0);
         }
 
         return binary.toString();
+    }
+
+    /**
+     * This method is used to cut a binary string to a given length
+     * @param binary this is the binary value
+     * @param length this is the given length
+     * @return string this is the shortened binary value
+     */
+    public static String cutToSize(StringBuilder binary, int length) {
+        return binary.delete(binary.length() - length + 1, binary.length()).toString();
+    }
+
+    /**
+     * This method is used to return a flipped version of a map, where the
+     * keys are swapped with values
+     * @param original this is the original map
+     * @return map this is the flipped map
+     */
+    public static Map<String, String> flip(Map<String, String> original) {
+        Map<String, String> flipped = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : original.entrySet()) {
+            flipped.put(entry.getValue(), entry.getKey());
+        }
+
+        return flipped;
     }
 
 }
