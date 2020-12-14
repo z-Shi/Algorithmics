@@ -17,5 +17,8 @@ The following is a running checklist of what I have implemented:
 - [x] LZW
   - [x] Encode Text
   - [x] Decode Text
-- [x] String Distance
-  - [x] Method to Calculate Distance between 2 Words
+- [x] Strings
+  - [x] Calculate Distance between 2 Words
+  - [x] Brute Force Search
+  - [x] KMP Search
+  - [ ] Boyer-Moore Search
