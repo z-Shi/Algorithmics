@@ -22,3 +22,6 @@ The following is a running checklist of what I have implemented:
   - [x] Brute Force Search
   - [x] KMP Search
   - [x] Boyer-Moore Search
+- [x] Graphs
+  - [x] Depth First Search
+  - [x] Breadth First Search
