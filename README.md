@@ -25,4 +25,4 @@ The following is a running checklist of what I have implemented:
 - [x] Graphs
   - [x] Depth First Search
   - [x] Breadth First Search
-  - [ ] Dijkstra's Shortest Paths
+  - [x] Dijkstra's Shortest Paths
