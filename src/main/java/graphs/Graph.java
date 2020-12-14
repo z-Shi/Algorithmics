@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.min;
+
 public class Graph {
 
     private int numOfVertices;
@@ -90,22 +92,36 @@ public class Graph {
             Vertex minimumVertex = null;
 
             for (Vertex vertex : vertices) {
-                if (!knownShortestPaths.contains(vertex.getIndex())) {
+                int vertexIndex = vertex.getIndex();
+
+                if (!knownShortestPaths.contains(vertexIndex)) {
                     if (minimumVertex == null) {
                         minimumVertex = vertex;
                         continue;
                     }
 
-                    if (distances.get(vertex) < distances.get(minimumVertex)) {
+                    if (distances.get(vertexIndex) < distances.get(vertexIndex)) {
                         minimumVertex = vertex;
                     }
                 }
             }
 
+            if (minimumVertex == null) {
+                break;
+            }
+
             knownShortestPaths.add(minimumVertex.getIndex());
 
-            // for (each w not in knownShortestPaths and adjacent to v) // perform relaxation
-            //     distances(w) = min{distances(w), distances(v) + wt(v, w) };
+            for (Vertex vertex : vertices) {
+                int vertexIndex = vertex.getIndex();
+
+                if ((!knownShortestPaths.contains(vertexIndex)) &&
+                        (minimumVertex.containsNodeInAdjacencyList(vertexIndex))) {
+                    int relaxedDistance = min(distances.get(vertexIndex),
+                            distances.get(vertexIndex) + getWeightOfEdgeBetween(minimumVertex, vertex));
+                    distances.put(vertex.getIndex(), relaxedDistance);
+                }
+            }
         }
 
         return distances;

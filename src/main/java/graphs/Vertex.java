@@ -42,6 +42,19 @@ public class Vertex {
         return adjacencyListNodes;
     }
 
+    public boolean containsNodeInAdjacencyList(int index) {
+        boolean containsNode = false;
+
+        for (AdjacencyListNode node : adjacencyListNodes) {
+            if (node.getIndex() == index) {
+                containsNode = true;
+                break;
+            }
+        }
+
+        return containsNode;
+    }
+
     public void addNodeToAdjacencyList(int index) {
         adjacencyListNodes.addLast(new AdjacencyListNode(index));
     }
