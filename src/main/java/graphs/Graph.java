@@ -1,6 +1,10 @@
 package graphs;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 public class Graph {
 
@@ -64,6 +68,60 @@ public class Graph {
                 }
             }
         }
+    }
+
+    public Map<Integer, Integer> dijkstrasShortestPath(int startingIndex) {
+        Map<Integer, Integer> distances = new HashMap<>();
+        Vertex startVertex = vertices[startingIndex];
+
+        List<Integer> knownShortestPaths = new ArrayList<>();
+        knownShortestPaths.add(startingIndex);
+
+        for (Vertex vertex : vertices) {
+            if (vertex.getIndex() == startingIndex) {
+                continue;
+            }
+
+            int weight = getWeightOfEdgeBetween(startVertex, vertex);
+            distances.put(vertex.getIndex(), weight);
+        }
+
+        while (knownShortestPaths.size() != numOfVertices) {
+            Vertex minimumVertex = null;
+
+            for (Vertex vertex : vertices) {
+                if (!knownShortestPaths.contains(vertex.getIndex())) {
+                    if (minimumVertex == null) {
+                        minimumVertex = vertex;
+                        continue;
+                    }
+
+                    if (distances.get(vertex) < distances.get(minimumVertex)) {
+                        minimumVertex = vertex;
+                    }
+                }
+            }
+
+            knownShortestPaths.add(minimumVertex.getIndex());
+
+            // for (each w not in knownShortestPaths and adjacent to v) // perform relaxation
+            //     distances(w) = min{distances(w), distances(v) + wt(v, w) };
+        }
+
+        return distances;
+    }
+
+    private int getWeightOfEdgeBetween(Vertex startVertex, Vertex endVertex) {
+        int weightBetween = Integer.MAX_VALUE;
+
+        for (AdjacencyListNode node : startVertex.getAdjacencyListNodes()) {
+            if (node.getIndex() == endVertex.getIndex()) {
+                weightBetween = node.getWeight();
+                break;
+            }
+        }
+
+        return weightBetween;
     }
 
     /**
