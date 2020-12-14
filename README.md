@@ -21,4 +21,4 @@ The following is a running checklist of what I have implemented:
   - [x] Calculate Distance between 2 Words
   - [x] Brute Force Search
   - [x] KMP Search
-  - [ ] Boyer-Moore Search
+  - [x] Boyer-Moore Search
