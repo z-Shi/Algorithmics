@@ -3,9 +3,15 @@ package graphs;
 public class AdjacencyListNode {
 
     private int index;
+    private int weight;
 
-    public AdjacencyListNode(int vertexIndex) {
-        this.index = vertexIndex;
+    public AdjacencyListNode(int index) {
+        this.index = index;
+    }
+
+    public AdjacencyListNode(int index, int weight) {
+        this.index = index;
+        this.weight = weight;
     }
 
     public int getIndex() {
@@ -14,6 +20,14 @@ public class AdjacencyListNode {
 
     public void setIndex(int index) {
         this.index = index;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
 }
