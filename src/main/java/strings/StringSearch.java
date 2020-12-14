@@ -1,6 +1,11 @@
 package strings;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class StringSearch {
+
+    private final int NO_OF_CHARS = 256;
 
     /**
      * This method uses a brute force strategy to find whether a given pattern is in a given text, if found it will
@@ -77,6 +82,41 @@ public class StringSearch {
     }
 
     /**
+     * This method uses the boyer-moore algorithm to find whether a given pattern is in a given text, if found
+     * it will return the starting position - if found, else it will return -1.
+     * @param text this is the given text
+     * @param pattern this is the given pattern
+     * @return int this is the starting position of the pattern, else it will be -1
+     */
+    public int bm(String text, String pattern) {
+        int patternLength = pattern.length();
+        int textLength = text.length();
+        int startingPosition = 0;
+        int textPosition = patternLength - 1;
+        int patternPosition = patternLength - 1;
+
+        int[] lastOccurrenceTable = new int[NO_OF_CHARS];
+        setupLastOccurrenceTable(pattern, lastOccurrenceTable);
+
+        while ((startingPosition <= textLength - patternLength) && (patternPosition >= 0)) {
+            if (text.charAt(textPosition) == pattern.charAt(patternPosition)) {
+                textPosition--;
+                patternPosition--;
+            } else {
+                startingPosition += max(1, patternPosition - lastOccurrenceTable[text.charAt(textPosition)]);
+                textPosition += patternLength - min(patternPosition, 1 + lastOccurrenceTable[text.charAt(textPosition)]);
+                patternPosition = patternLength - 1;
+            }
+        }
+
+        if (patternPosition < 0) {
+            return startingPosition;
+        }
+
+        return -1;
+    }
+
+    /**
      * This method is used to setup the border table, given a set pattern.
      * @param pattern this is the given pattern
      * @return int[] this is the border table
@@ -100,6 +140,21 @@ public class StringSearch {
         }
 
         return borderTable;
+    }
+
+    /**
+     * This is a method used to setup the last occurrence table for storing the last occurrence of each character.
+     * If it doesn't occur in the pattern, it would store -1
+     * @param pattern this is the given pattern
+     * @param lastOccurrenceTable this is the last occurrence table
+     */
+    private void setupLastOccurrenceTable(String pattern, int[] lastOccurrenceTable) {
+        for (int i = 0; i < NO_OF_CHARS; i++) {
+            lastOccurrenceTable[i] = -1;
+        }
+        for (int i = 0; i < pattern.length(); i++) {
+            lastOccurrenceTable[(int) pattern.charAt(i)] = i;
+        }
     }
 
 }

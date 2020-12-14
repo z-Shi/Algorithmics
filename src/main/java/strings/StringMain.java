@@ -23,6 +23,9 @@ public class StringMain {
 
         startingPosition = searcher.kmp(text, pattern);
         System.out.println("Pattern: '" + pattern + "' found in Text: " + text + "' with starting position: " + startingPosition);
+
+        startingPosition = searcher.bm(text, pattern);
+        System.out.println("Pattern: '" + pattern + "' found in Text: " + text + "' with starting position: " + startingPosition);
     }
 
 }
