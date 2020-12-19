@@ -26,6 +26,14 @@ public class Graph {
         return numOfVertices;
     }
 
+    public Vertex[] getVertices() {
+        return vertices;
+    }
+
+    public Vertex getVertex(int index) {
+        return vertices[index];
+    }
+
     /**
      * This method allows a depth first search to occur on the specified graph.
      * Makes use of a helper method, visit.
@@ -127,7 +135,7 @@ public class Graph {
         return distances;
     }
 
-    private int getWeightOfEdgeBetween(Vertex startVertex, Vertex endVertex) {
+    public static int getWeightOfEdgeBetween(Vertex startVertex, Vertex endVertex) {
         int weightBetween = Integer.MAX_VALUE;
 
         for (AdjacencyListNode node : startVertex.getAdjacencyListNodes()) {

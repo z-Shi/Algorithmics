@@ -1,6 +1,12 @@
 package util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Utility {
@@ -82,6 +88,43 @@ public class Utility {
         }
 
         return flipped;
+    }
+
+    /**
+     * This method is used to return an input stream given the file name, for resources.
+     * @param file this is the given file name
+     * @return inputstream this is the file stream
+     * @throws IllegalArgumentException if the input stream is null, i.e. file not found
+     */
+    public static InputStream getFileFromResourceAsStream(String file) {
+        ClassLoader loader = Utility.class.getClassLoader();
+        InputStream stream = loader.getResourceAsStream(file);
+
+        if (stream == null) {
+            throw new IllegalArgumentException("File [" + file + "] not found!");
+        }
+
+        return stream;
+    }
+
+    /**
+     * This method is used to return a list of lines, given an input stream
+     * @param inputStream this is the given input stream
+     * @return list<string> this is the list of lines from the stream
+     * @throws IOException if some error occurs when getting input/output
+     */
+    public static List<String> readFromInputStream(InputStream inputStream) throws IOException {
+        List<String> lines = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+        }
+
+        return lines;
     }
 
 }

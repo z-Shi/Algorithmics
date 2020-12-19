@@ -59,6 +59,20 @@ public class Vertex {
         adjacencyListNodes.addLast(new AdjacencyListNode(index));
     }
 
+    public void removeNodeFromAdjacencyList(int index) {
+        AdjacencyListNode nodeToRemove = null;
+
+        for (AdjacencyListNode node : adjacencyListNodes) {
+            if (node.getIndex() == index) {
+                nodeToRemove = node;
+            }
+        }
+
+        if (nodeToRemove != null) {
+            adjacencyListNodes.remove(nodeToRemove);
+        }
+    }
+
     public int getDegree() {
         return adjacencyListNodes.size();
     }
