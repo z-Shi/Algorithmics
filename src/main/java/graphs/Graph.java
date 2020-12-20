@@ -19,6 +19,7 @@ public class Graph {
 
         for (int i = 0; i < numOfVertices; i++) {
             vertices[i] = new Vertex(i);
+            vertices[i].setPredecessor(-1);
         }
     }
 

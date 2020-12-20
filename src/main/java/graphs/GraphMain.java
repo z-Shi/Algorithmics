@@ -41,23 +41,33 @@ public class GraphMain {
 
         System.out.println("Initial Graph State: ");
         outputGraphState(graph);
+
+        graph.depthFirstSearch();
+
+        System.out.println("Depth-First Search Graph State: ");
+        outputGraphState(graph);
+
+        graph.breadthFirstSearch();
+
+        System.out.println("Breadth-First Search Graph State: ");
+        outputGraphState(graph);
     }
 
     private static void outputGraphState(Graph graph) {
         for (Vertex vertex : graph.getVertices()) {
             StringBuilder vertexInfo = new StringBuilder();
 
-            vertexInfo.append("Vertex [").append(vertex.getIndex()).append("] ");
-            vertexInfo.append("Visited [").append(vertex.wasVisited()).append("] ");
-            vertexInfo.append("Adjacent To: [");
+            vertexInfo.append("Vertex [").append(vertex.getIndex()).append("] \n");
+            vertexInfo.append("  Visited [").append(vertex.wasVisited()).append("] \n");
+            vertexInfo.append("  Predecessor [").append(vertex.getPredecessor()).append("] \n");
+            vertexInfo.append("  Adjacent To: [ \n");
 
             for (AdjacencyListNode node : vertex.getAdjacencyListNodes()) {
-                vertexInfo.append("Index: [").append(node.getIndex()).append("] ");
-                vertexInfo.append("Edge Weight: [").append(node.getWeight()).append("] ");
+                vertexInfo.append("    Index: [").append(node.getIndex()).append("] ");
+                vertexInfo.append("Edge Weight: [").append(node.getWeight()).append("] \n");
             }
 
-            vertexInfo.append("]");
-            vertexInfo.append("\n");
+            vertexInfo.append("  ] \n");
 
             System.out.print(vertexInfo.toString());
         }
