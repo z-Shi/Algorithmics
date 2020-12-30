@@ -26,3 +26,4 @@ The following is a running checklist of what I have implemented:
   - [x] Depth First Search
   - [x] Breadth First Search
   - [x] Dijkstra's Shortest Paths
+  - [x] Prim Jarnik - Minimum Spanning Tree
