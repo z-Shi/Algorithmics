@@ -6,6 +6,7 @@ import static util.Utility.readFromInputStream;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 public class GraphMain {
 
@@ -39,18 +40,21 @@ public class GraphMain {
             vertex++;
         }
 
-        System.out.println("Initial Graph State: ");
+        System.out.println("\nInitial Graph State: ");
         outputGraphState(graph);
 
         graph.depthFirstSearch();
 
-        System.out.println("Depth-First Search Graph State: ");
+        System.out.println("\nDepth-First Search Graph State: ");
         outputGraphState(graph);
 
         graph.breadthFirstSearch();
 
-        System.out.println("Breadth-First Search Graph State: ");
+        System.out.println("\nBreadth-First Search Graph State: ");
         outputGraphState(graph);
+
+        Map<Integer, Integer> shortestDistances = graph.dijkstrasShortestPath(0);
+        System.out.println("\nShortest Distances: " + shortestDistances.toString());
     }
 
     private static void outputGraphState(Graph graph) {

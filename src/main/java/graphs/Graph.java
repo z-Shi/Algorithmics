@@ -1,12 +1,12 @@
 package graphs;
 
+import static java.lang.Math.min;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.Math.min;
 
 public class Graph {
 
@@ -126,9 +126,11 @@ public class Graph {
 
                 if ((!knownShortestPaths.contains(vertexIndex)) &&
                         (minimumVertex.containsNodeInAdjacencyList(vertexIndex))) {
-                    int relaxedDistance = min(distances.get(vertexIndex),
-                            distances.get(vertexIndex) + getWeightOfEdgeBetween(minimumVertex, vertex));
-                    distances.put(vertex.getIndex(), relaxedDistance);
+                    int weightBetween = getWeightOfEdgeBetween(minimumVertex, vertex);
+                    int comparisonValue = (weightBetween < Integer.MAX_VALUE) ? distances.get(minimumVertex.getIndex())
+                            + weightBetween : Integer.MAX_VALUE;
+                    int relaxedDistance = min(distances.get(vertexIndex), comparisonValue);
+                    distances.put(vertexIndex, relaxedDistance);
                 }
             }
         }
