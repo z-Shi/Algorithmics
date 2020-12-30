@@ -81,6 +81,12 @@ public class Graph {
         }
     }
 
+    /**
+     * This method returns a map with the shortest path from the starting index to every other index.
+     * If a path cannot be found, it uses the max value of Integer, refer to Java documentation.
+     * @param startingIndex the given starting index
+     * @return map of shortest paths
+     */
     public Map<Integer, Integer> dijkstrasShortestPath(int startingIndex) {
         Map<Integer, Integer> distances = new HashMap<>();
         Vertex startVertex = vertices[startingIndex];
@@ -138,6 +144,13 @@ public class Graph {
         return distances;
     }
 
+    /**
+     * This method is used to get the weight of the edge between two vertices.
+     * If there is no edge between the two vertices, it defaults to the maximum value of the Integer.
+     * @param startVertex this is one vertex
+     * @param endVertex this is the other
+     * @return this is the weight of the edge between the two vertices
+     */
     public static int getWeightOfEdgeBetween(Vertex startVertex, Vertex endVertex) {
         int weightBetween = Integer.MAX_VALUE;
 

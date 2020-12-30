@@ -24,6 +24,11 @@ public class PrimJarnik {
         prepareVariables();
     }
 
+    /**
+     * This method is used to return a minimum spanning tree of a given graph.
+     * It is the implementation of the pseudocode covered in our class.
+     * @return the minimum spanning tree as a map of edge & weight
+     */
     public Map<String, Integer> standardPrimJarnik() {
         if (nonTreeVertices.size() < 1) {
             return minimumSpanningTree;
