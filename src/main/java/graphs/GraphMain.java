@@ -69,7 +69,6 @@ public class GraphMain {
             System.out.println("Edge from: " + entry.getKey() + " with Weight: " + entry.getValue());
         }
 
-        primJarnik.resetPrimJarnik();
     }
 
     private static void outputGraphState(Graph graph) {
