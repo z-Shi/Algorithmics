@@ -69,6 +69,10 @@ public class GraphMain {
             System.out.println("Edge from: " + entry.getKey() + " with Weight: " + entry.getValue());
         }
 
+        graph.topologicalOrdering();
+
+        System.out.println("\nTopological Ordering: ");
+        outputGraphState(graph);
     }
 
     private static void outputGraphState(Graph graph) {

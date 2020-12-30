@@ -7,10 +7,14 @@ public class Vertex {
     private int index;
     private boolean visited;
     private int predecessor;
+    private int label;
+    private int count;
     private LinkedList<AdjacencyListNode> adjacencyListNodes;
 
     public Vertex(int index) {
         this.index = index;
+        this.label = -1;
+        this.count = 0;
         adjacencyListNodes = new LinkedList<>();
     }
 
@@ -38,6 +42,22 @@ public class Vertex {
         this.predecessor = predecessor;
     }
 
+    public int getLabel() {
+        return label;
+    }
+
+    public void setLabel(int label) {
+        this.label = label;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
     public LinkedList<AdjacencyListNode> getAdjacencyListNodes() {
         return adjacencyListNodes;
     }
@@ -57,6 +77,7 @@ public class Vertex {
 
     public void addNodeToAdjacencyList(int index) {
         adjacencyListNodes.addLast(new AdjacencyListNode(index));
+        count++;
     }
 
     public void removeNodeFromAdjacencyList(int index) {
@@ -71,6 +92,7 @@ public class Vertex {
 
         if (nodeToRemove != null) {
             adjacencyListNodes.remove(nodeToRemove);
+            count--;
         }
     }
 
@@ -85,6 +107,8 @@ public class Vertex {
         vertexInfo.append("Vertex [").append(index).append("] \n");
         vertexInfo.append("  Visited [").append(visited).append("] \n");
         vertexInfo.append("  Predecessor [").append(predecessor).append("] \n");
+        vertexInfo.append("  Count [").append(count).append("] \n");
+        vertexInfo.append("  Label [").append(label).append("] \n");
         vertexInfo.append("  Adjacent To: [ \n");
 
         for (AdjacencyListNode node : getAdjacencyListNodes()) {

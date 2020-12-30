@@ -2,11 +2,7 @@ package graphs;
 
 import static java.lang.Math.min;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Graph {
 
@@ -162,6 +158,45 @@ public class Graph {
         }
 
         return weightBetween;
+    }
+
+    /**
+     * This method is used to create the topological ordering.
+     * It is intended to be used on a directed acyclic graph - and therefore doesn't produce the correct ordering here.
+     * Theoretically, the pseudocode should work.
+     * todo: implement a directed graph for this to work as expected
+     */
+    public void topologicalOrdering() {
+        for (Vertex vertex : vertices) {
+            vertex.setCount(vertex.getDegree());
+            vertex.setLabel(-1);
+        }
+
+        Queue<Vertex> sourceQueue = new PriorityQueue<>();
+
+        for (Vertex vertex : vertices) {
+            if (vertex.getCount() == 0) {
+                sourceQueue.add(vertex);
+            }
+        }
+
+        int nextLabel = 1;
+
+        while (sourceQueue.size() > 0) {
+            Vertex vertex = sourceQueue.poll();
+            vertex.setLabel(nextLabel);
+
+            for (AdjacencyListNode node : vertex.getAdjacencyListNodes()) {
+                Vertex adjacentVertex = vertices[node.getIndex()];
+                adjacentVertex.setCount(adjacentVertex.getCount() - 1);
+
+                if (adjacentVertex.getCount() == 0) {
+                    sourceQueue.add(adjacentVertex);
+                }
+            }
+
+            nextLabel++;
+        }
     }
 
     /**
