@@ -65,6 +65,7 @@ public class Vertex {
         for (AdjacencyListNode node : adjacencyListNodes) {
             if (node.getIndex() == index) {
                 nodeToRemove = node;
+                break;
             }
         }
 
@@ -75,6 +76,25 @@ public class Vertex {
 
     public int getDegree() {
         return adjacencyListNodes.size();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder vertexInfo = new StringBuilder();
+
+        vertexInfo.append("Vertex [").append(index).append("] \n");
+        vertexInfo.append("  Visited [").append(visited).append("] \n");
+        vertexInfo.append("  Predecessor [").append(predecessor).append("] \n");
+        vertexInfo.append("  Adjacent To: [ \n");
+
+        for (AdjacencyListNode node : getAdjacencyListNodes()) {
+            vertexInfo.append("    Index: [").append(node.getIndex()).append("] ");
+            vertexInfo.append("Edge Weight: [").append(node.getWeight()).append("] \n");
+        }
+
+        vertexInfo.append("  ] \n");
+
+        return vertexInfo.toString();
     }
 
 }

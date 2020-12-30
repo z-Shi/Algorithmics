@@ -53,27 +53,28 @@ public class GraphMain {
         System.out.println("\nBreadth-First Search Graph State: ");
         outputGraphState(graph);
 
-        Map<Integer, Integer> shortestDistances = graph.dijkstrasShortestPath(0);
-        System.out.println("\nShortest Distances: " + shortestDistances.toString());
+        int startIndex = 0;
+        Map<Integer, Integer> shortestDistances = graph.dijkstrasShortestPath(startIndex);
+        System.out.println("\nShortest Distances: ");
+
+        for (Map.Entry<Integer, Integer> entry : shortestDistances.entrySet()) {
+            System.out.println("Shortest Distance from " + startIndex + " -> " + entry.getKey() + " is: " + entry.getValue());
+        }
+
+        PrimJarnik primJarnik = new PrimJarnik(graph);
+        Map<String, Integer> minimumSpanningTree = primJarnik.standardPrimJarnik();
+        System.out.println("\nMinimum Spanning Tree:");
+
+        for (Map.Entry<String, Integer> entry : minimumSpanningTree.entrySet()) {
+            System.out.println("Edge from: " + entry.getKey() + " with Weight: " + entry.getValue());
+        }
+
+        primJarnik.resetPrimJarnik();
     }
 
     private static void outputGraphState(Graph graph) {
         for (Vertex vertex : graph.getVertices()) {
-            StringBuilder vertexInfo = new StringBuilder();
-
-            vertexInfo.append("Vertex [").append(vertex.getIndex()).append("] \n");
-            vertexInfo.append("  Visited [").append(vertex.wasVisited()).append("] \n");
-            vertexInfo.append("  Predecessor [").append(vertex.getPredecessor()).append("] \n");
-            vertexInfo.append("  Adjacent To: [ \n");
-
-            for (AdjacencyListNode node : vertex.getAdjacencyListNodes()) {
-                vertexInfo.append("    Index: [").append(node.getIndex()).append("] ");
-                vertexInfo.append("Edge Weight: [").append(node.getWeight()).append("] \n");
-            }
-
-            vertexInfo.append("  ] \n");
-
-            System.out.print(vertexInfo.toString());
+            System.out.println(vertex.toString());
         }
     }
 
